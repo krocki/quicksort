@@ -26,7 +26,7 @@ all: $(TARGETS)
 qsort_asm: qsort_main.o partition_inner_asm.o partition_outer_asm.o
 	$(LD) $(LD_OPTS) -o $@ $^
 
-qsort_asm: qsort_main.o partition_inner_asm.o partition_outer_c.o
+qsort_c: qsort_main.o partition_inner_asm.o partition_outer_c.o
 	$(LD) $(LD_OPTS) -o $@ $^
 
 clean:

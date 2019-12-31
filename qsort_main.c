@@ -20,7 +20,7 @@ void print_arr(uint64_t *arr, uint64_t len, uint64_t div) {
   for (uint64_t i=0; i<len; i++)
   {
     if (div == i) putchar(']');
-    putchar(arr[i]);
+    printf("%04llx%s", arr[i], i == (len-1) ? "\n" : " ");
     if (div == i) putchar('[');
   }
   puts("");
@@ -36,15 +36,13 @@ int check_arr(uint64_t *arr, uint64_t len) {
 
 int main(int argc, char **argv) {
 
-  uint64_t len = argc > 1 ? strtol(argv[1], NULL, 10) : 16384;
+  uint64_t len = argc > 1 ? strtol(argv[1], NULL, 10) : (1 << 18);
   uint64_t arr[len];
   srand(time(NULL));
-  randomize(arr, len, 'a', 'z');
-  print_arr(arr, len, 100);
+  randomize(arr, len, 0, (1 << 20));
   timeit(partition_all(arr, len));
-  print_arr(arr, len, 100);
   int ok = check_arr(arr, len);
-  printf("%s\n", ok==0 ? "OK" : "FAIL");
+  printf("%s\n", ok==0 ? "TEST OK" : "FAIL");
   return ok;
 
 }
