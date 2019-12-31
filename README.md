@@ -1,2 +1,1 @@
-# quicksort
-quicksort in C and x64_86 asm
+# Quicksort in C and in x64_86 assembly
