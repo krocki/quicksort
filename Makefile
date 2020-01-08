@@ -1,4 +1,4 @@
-TARGETS=qsort_c qsort_asm
+TARGETS=qsort_c
 
 # Mac OS
 # CC=gcc
@@ -8,9 +8,9 @@ TARGETS=qsort_c qsort_asm
 
 #-Ofast causes a segfault
 CC=gcc
-CC_OPTS=-O3 -Wall -fPIC -fomit-frame-pointer
+CC_OPTS=-g -gdwarf -O0 -Wall -fPIC -Wfatal-errors
 LD=gcc
-LD_OPTS=-lc -flto
+LD_OPTS=-g -gdwarf -lc -flto
 
 all: $(TARGETS)
 
@@ -20,13 +20,13 @@ all: $(TARGETS)
 %.o: %.c
 	$(CC) $(OPTS) -c $< -o $@
 
-%_asm.o: %.asm
-	nasm -f macho64 $< -o $@
+#%_asm.o: %.asm
+#	nasm -f macho64 $< -o $@
+#
+#qsort_asm: qsort_main.o partition_inner_asm.o partition_outer_asm.o
+#	$(LD) $(LD_OPTS) -o $@ $^
 
-qsort_asm: qsort_main.o partition_inner_asm.o partition_outer_asm.o
-	$(LD) $(LD_OPTS) -o $@ $^
-
-qsort_c: qsort_main.o partition_inner_asm.o partition_outer_c.o
+qsort_c: qsort.o
 	$(LD) $(LD_OPTS) -o $@ $^
 
 clean:
